@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.0.0)
 project (Tutorial, VERSION 1.0)
 
 # Check for CppUTest and bail out if they don't have it
