@@ -1,9 +1,9 @@
 /***
  * Excerpted from "Test-Driven Development for Embedded C",
  * published by The Pragmatic Bookshelf.
- * Copyrights apply to this code. It may not be used to create training material, 
+ * Copyrights apply to this code. It may not be used to create training material,
  * courses, books, articles, and the like. Contact us if you are in doubt.
- * We make no guarantees that this code is fit for any purpose. 
+ * We make no guarantees that this code is fit for any purpose.
  * Visit http://www.pragmaticprogrammer.com/titles/jgade for more book information.
 ***/
 /*- ------------------------------------------------------------------ -*/
@@ -28,10 +28,10 @@
 #include "RuntimeError.h"
 
 static uint16_t * ledsAddress;
-static uint16_t ledsImage; 
+static uint16_t ledsImage;
 
-enum { 
-  ALL_LEDS_ON = ~0, 
+enum {
+  ALL_LEDS_ON = ~0,
   ALL_LEDS_OFF = 0
 };
 
@@ -39,11 +39,11 @@ enum {
 /// Initialize Led Driver with the hardware address
 /// @param address the hardware address for the LEDs
 ///
-void LedDriver_Create(uint16_t * address) 
+void LedDriver_Create(uint16_t * address)
 {
   ledsAddress = address;
   ledsImage = ALL_LEDS_OFF;
-  *ledsAddress = ledsImage; 
+  *ledsAddress = ledsImage;
 }
 
 ///
@@ -52,9 +52,9 @@ void LedDriver_Create(uint16_t * address)
 void LedDriver_Destroy(void) { }
 
 
-enum { 
-  FIRST_LED = 1, 
-  LAST_LED = 16 
+enum {
+  FIRST_LED = 1,
+  LAST_LED = 16
 };
 
 ///
@@ -81,12 +81,12 @@ static void updateHardware(void)
 
 ///
 /// Helper function to convert led number to bit
-static uint16_t convertLedNumberToBit(int number) 
+static uint16_t convertLedNumberToBit(int number)
 {
   return 1 << (number - 1);
 }
 
-/// 
+///
 /// Toggles the bit of the led number on
 /// @param the led number to toggle
 static void setLedImageBit(int ledNumber)
@@ -94,7 +94,7 @@ static void setLedImageBit(int ledNumber)
   ledsImage |= convertLedNumberToBit(ledNumber);
 }
 
-/// 
+///
 /// Toggles the bit of the led number off
 /// @param the led number to toggle
 static void clearLedImageBit(int ledNumber)
@@ -108,7 +108,7 @@ static void clearLedImageBit(int ledNumber)
 ///
 void LedDriver_TurnOn(int ledNumber)
 {
-  if (IsLedOutOfBounds(ledNumber)) 
+  if (IsLedOutOfBounds(ledNumber))
     return;
 
   setLedImageBit(ledNumber);
@@ -118,7 +118,7 @@ void LedDriver_TurnOn(int ledNumber)
 ///
 /// Turn an individual LED off
 /// @param ledNumber the LED number
-void LedDriver_TurnOff(int ledNumber) 
+void LedDriver_TurnOff(int ledNumber)
 {
   if (IsLedOutOfBounds(ledNumber))
     return;
@@ -137,15 +137,15 @@ void LedDriver_TurnAllOn(void)
 
 ///
 /// Turn all the LEDs off
-void LedDriver_TurnAllOff(void) 
+void LedDriver_TurnAllOff(void)
 {
   ledsImage = ALL_LEDS_OFF;
   updateHardware();
 }
 
-/// 
+///
 /// Returns true if the LED for ledNumber is on
-BOOL LedDriver_IsOn(int ledNumber) 
+BOOL LedDriver_IsOn(int ledNumber)
 {
   if (IsLedOutOfBounds(ledNumber))
     return FALSE;
